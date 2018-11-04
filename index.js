@@ -56,10 +56,27 @@ function handleNewItemSubmit() {
   });
 }
 function handleItemCheckClick() {
-  console.log('handleItemCheckClicked() fired');
+  function getItemIndexFromElement(item) {
+    const $itemIndexString = $(item).closest('.js-item-index-element')
+      .attr('data-item-index');
+    return parseInt($itemIndexString);
+  }
+  function toggleCheckedItem(itemIndex) {
+    console.log(`Toggled checked item at Index ${itemIndex}`);
+    STORE.ITEMS[itemIndex].checked = !STORE.ITEMS[itemIndex].checked;
+  }
+  $('.js-shopping-list').on('click', '.js-item-toggle', event => {
+    console.log('handleItemCheckClick() fired when clicked');
+    const itemIndex = getItemIndexFromElement(event.currentTarget);
+    console.log(`Index ${itemIndex} was clicked`);
+    toggleCheckedItem(itemIndex);
+    renderShoppingList();
+  });
+  console.log('handleItemCheckClick() fired');
 }
 function handleDeleteItemClick() {
   console.log('handleDeleteItemClick() fired');
+  
 }
 
 
