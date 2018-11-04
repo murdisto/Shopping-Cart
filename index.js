@@ -10,7 +10,6 @@ const STORE = {
     {name: 'milk', checked: true},
     {name: 'bread', checked: false},
   ],
-
 };
 //////////////
 function renderShoppingList() {
@@ -33,7 +32,7 @@ function renderShoppingList() {
         </li>`;
     }
     const items = shoppingList.map((item, index) => generateItemElement(item, index));
-    console.log(items.join(''));
+    //console.log(items.join(''));
     return items; //seems that this works without making the array a string
   }
   const shoppingListItemsString = generateShoppingListItemsString(STORE.ITEMS);
@@ -41,6 +40,20 @@ function renderShoppingList() {
 }
 function handleNewItemSubmit() {
   console.log('handleNewItemSubmit() fired');
+
+  function addItemToList(itemName) {
+    console.log(`Adding ${itemName} to shopping list.`);
+    STORE.ITEMS.push({name: itemName, checked: false});
+  }
+
+  $('#js-shopping-list-form').on('submit', event => {
+    event.preventDefault();
+    const newItemSubmission = $('.js-shopping-list-entry').val();
+    console.log(`User submitted '${newItemSubmission}'`);
+    $('.js-shopping-list-entry').val('');
+    addItemToList(newItemSubmission); //where can I see the new array?
+    renderShoppingList();
+  });
 }
 function handleItemCheckClick() {
   console.log('handleItemCheckClicked() fired');
